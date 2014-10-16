@@ -1,4 +1,4 @@
-Enter file contents here
+
 # Overview
 The purpose of this project is to...
 
