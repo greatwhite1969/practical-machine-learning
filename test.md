@@ -7,9 +7,8 @@ The data were available in two separate comma-separated files.
 [Training Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv)     
 [Testing Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)
 
-Note that hereafter the 'testing' dataset above will be called  
-'validation.' This is to distiguish it from the testing data partitioned from the training data,
-as noted below.  
+Note that hereafter the 'testing' dataset above will be called  'validation.' This is to 
+distiguish it from the testing data partitioned from the training data, as noted below.  
 
 # Import Data
 The first step is to read in the training data and examine it's structure.  
@@ -36,8 +35,8 @@ modFit <- randomForest(classe ~ ., data = train_final)
 modFit
 ```
 
-The results show an out-of-bag (OOB) error of 0.21%, confirmed
-by the strong diagonal elements of the confusion matrix.
+The results show an out-of-bag (OOB) error of 0.21%, confirmed by the strong diagonal elements of 
+the confusion matrix.
 
 ```
 Type of random forest: classification
@@ -56,8 +55,8 @@ E    0    0    0    5 2160 0.002309469
 
 # Apply Random Forest MOdel to the Testing Dataset
 
-The fitted model was applied to the testing data and the resulting
-predicitons were used to construct a confusion matrix.
+The fitted model was applied to the testing data and the resulting predicitons were used to 
+construct a confusion matrix.
 
 ```
 pred_rf <- predict(modFit ,test_final,type = "response") 
@@ -72,14 +71,14 @@ pred_rf    A    B    C    D    E
 
 
 ```
-The results of this matrix confirm the OOB error.  The 16 off-diagonal elements
-yield an out-of-sample error of 0.20%.
+The results of this matrix confirm the OOB error.  The 16 off-diagonal elements yield an 
+out-of-sample error of 0.20%.
 
 
 # Apply Random Forest Model to Validation Dataset
 
-The good performance of the model in both the training OOB and testing steps 
-demonstrate that the model is ready for the validation stage.
+The good performance of the model in both the training OOB and testing steps demonstrate 
+that the model is ready for the validation stage.
 
 ```
 
@@ -89,8 +88,8 @@ valid <- read.table(file = "./data/pml-testing.csv", header = T, sep = ",")
 str(valid)
 dim(valid)
 ```
-The numeric-only structure of the training data was applied here for simplicity.
-Additionally, the name and problem ID were included.
+The numeric-only structure of the training data was applied here for simplicity.  Additionally, 
+the user name and problem ID were included.
 ```
 
 ## numeric only with name and problem id
@@ -108,9 +107,8 @@ dim(valid_clean2)
 str(valid_clean2)
 fix(valid_clean2)
 ```
-The fitted random forest model was applied to the 20 observations of the validataion
-dataset and attached.
-
+The fitted random forest model was applied to the 20 observations of the validataion dataset 
+and attached.
 ```
 ## use model to predict classe for validation data set & attach
 
