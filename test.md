@@ -7,29 +7,79 @@ The data were available in two separate comma-separated files.
 [Training Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv)     
 [Testing Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)
 
+Note that hereafter the 'testing' dataset above will be called  
+'validation.' This is to distiguish it from the testing data partitioned from the training data,
+as noted below.  
+
 # Import Data
-The first step is to
+The first step is to read in the training data and examine it's structure.  
 
 ```
-
 # read in training data 
 training <- read.table(file = "./data/pml-training.csv", header = T, sep = ",")
 str(training)
 
-# read in testing data
-testing <- read.table(file = "./data/pml-testing.csv", header = T, sep = ",")
-str(testing)
-
 ```
-
 
 # Clean Data
 Next, we must...
 
 
 
+# Random Forest Model
+
+The package randomForest was loaded and fitted to the training dataset.
+
+```
+
+modFit <- randomForest(classe ~ ., data = train_final)
+modFit
+```
+
+The results show an out-of-bag (OOB) error of 0.21%, confirmed
+by the strong diagonal elements of the confusion matrix.
+
+```
+Type of random forest: classification
+                     Number of trees: 500
+No. of variables tried at each split: 7
+
+        OOB estimate of  error rate: 0.21%
+Confusion matrix:
+     A    B    C    D    E class.error
+A 3348    0    0    0    0 0.000000000
+B    2 2276    1    0    0 0.001316367
+C    0    4 2049    1    0 0.002434275
+D    0    0   11 1918    1 0.006217617
+E    0    0    0    5 2160 0.002309469
+```
+
+# Apply Random Forest MOdel to the Testing Dataset
+
+The fitted model was applied to the testing data and the resulting
+predicitons were used to construct a confusion matrix.
+
+```
+pred_rf <- predict(modFit ,test_final,type = "response") 
+table(pred_rf,test_final$classe)
+
+pred_rf    A    B    C    D    E
+      A 2232    0    0    0    0
+      B    0 1518    5    0    0
+      C    0    0 1362    5    0
+      D    0    0    1 1280    4
+      E    0    0    0    1 1438
+
+
+```
+The results of this matrix confirm the OOB error.  The 16 off-diagonal elements
+yield an out-of-sample error of 0.20%.
+
+
 # Apply Random Forest Model to Validation Dataset
 
+The good performance of the model in both the training OOB and testing steps 
+demonstrate that the model is ready for the validation stage.
 
 ```
 
