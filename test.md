@@ -10,35 +10,99 @@ The data were available in two separate comma-separated files.
 Note that hereafter the 'testing' dataset above will be called  'validation.' This is to 
 distiguish it from the testing data partitioned from the training data, as noted below.  
 
+
 # Import Data
 The first step is to read in the training data and examine it's structure.  
-
 ```
+
 # read in training data 
 training <- read.table(file = "./data/pml-training.csv", header = T, sep = ",")
 str(training)
 
 ```
 
-# Clean Data
-Next, we must...
 
+# Clean Data
+The dataset is very large, with 19,622 observations and 160 total columns 
+including the dependent variable classe,name of the subject, and observation number.  
+Many columns were incomplete for all observations.  The first step was to remove all variables 
+with missing values.  This removed 67 columns.
+```
+## remove variables with at least one NA from training data
+
+train_clean <-train[ , colSums(is.na(train)) == 0]
+dim(train_clean)
+
+```
+User name and observation number were removed from the dataset.  Including user name as a covariate
+could result in the model not being useable outside of the six individuals in the study.  Observation
+number should have no predictive power in the model.  
+```
+
+## take out observation number and user name
+
+table(train_clean$user_name,train_clean$classe)
+train_clean <- train_clean[,-(1:2)]
+
+```
+To further reduce dimensionality, all factor variables were removed from the dataset.  Many of these
+factors had over 20 levels which could possible lead to long run times for the model.  
+```
+
+## numeric only with classe
+
+keep <- sapply(train_clean,is.numeric)
+classe <- train_clean$classe
+
+```
+Classe was added back in, resulting in a dataset with 56 total columns:  55 possible covariates and
+the dependent variable classe.
+```
+
+train_clean2 <- cbind(classe,train_clean[,keep])
+dim(train_clean2)
+
+```
+
+
+# Split a Testing Set Off from the Training Set
+One method to impose cross-validation is to set aside part of the training data as a testing set.
+As [Breiman and Cuttler] (http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#features)note, the out-of-bag sampling by random forest models precludes the need for cross-validation.  However, it is done here as an additional
+check on the model.
+
+The clean data was split 60% to train the random forest model, and 40% for model testing.  This resulted
+in 11,776 observations available for training and 7,846 for testing.
+```
+
+library(caret)
+
+inTrain <- createDataPartition(y = train_clean2$classe,
+                               p = 0.60, list = FALSE)
+
+train_final <- train_clean2[inTrain,]
+dim(train_final)
+
+test_final <- train_clean2[-inTrain,]
+dim(test_final)
+
+```
 
 
 # Random Forest Model
 
 The package randomForest was loaded and fitted to the training dataset.
-
 ```
 
 modFit <- randomForest(classe ~ ., data = train_final)
 modFit
+
 ```
 
 The results show an out-of-bag (OOB) error of 0.21%, confirmed by the strong diagonal elements of 
 the confusion matrix.
 
 ```
+
 Type of random forest: classification
                      Number of trees: 500
 No. of variables tried at each split: 7
@@ -51,14 +115,16 @@ B    2 2276    1    0    0 0.001316367
 C    0    4 2049    1    0 0.002434275
 D    0    0   11 1918    1 0.006217617
 E    0    0    0    5 2160 0.002309469
+
 ```
 
-# Apply Random Forest MOdel to the Testing Dataset
+
+# Apply Random Forest Model to the Testing Dataset
 
 The fitted model was applied to the testing data and the resulting predicitons were used to 
 construct a confusion matrix.
-
 ```
+
 pred_rf <- predict(modFit ,test_final,type = "response") 
 table(pred_rf,test_final$classe)
 
@@ -79,7 +145,6 @@ out-of-sample error of 0.20%.
 
 The good performance of the model in both the training OOB and testing steps demonstrate 
 that the model is ready for the validation stage.
-
 ```
 
 ## read in validation data
@@ -87,13 +152,13 @@ that the model is ready for the validation stage.
 valid <- read.table(file = "./data/pml-testing.csv", header = T, sep = ",")
 str(valid)
 dim(valid)
+
 ```
 The numeric-only structure of the training data was applied here for simplicity.  Additionally, 
 the user name and problem ID were included.
 ```
 
 ## numeric only with name and problem id
-
 
 valid_clean <- valid
 
@@ -104,22 +169,24 @@ problem_id <- valid_clean$problem_id
 valid_clean2 <- cbind(problem_id, name,valid_clean[,keep])
 
 dim(valid_clean2)
-str(valid_clean2)
-fix(valid_clean2)
+
 ```
 The fitted random forest model was applied to the 20 observations of the validataion dataset 
 and attached.
 ```
+
 ## use model to predict classe for validation data set & attach
 
 pred_valid <- predict(modFit,valid_clean2)
 pred_valid
 
 valid_final <- cbind(pred_valid,valid_clean2)
+
 ```
 The predictions were written to individual text files using the script provided by the 
 course administrators.
 ```
+
 ## write answers to file
 
 setwd("C://.Coursera/machine learning/project")
