@@ -90,7 +90,7 @@ dim(test_final)
 
 # Random Forest Model
 
-The package randomForest was loaded and fitted to the training dataset.
+The package randomForest was loaded and fitted to the 11,776 observations in the training dataset.
 ```
 
 modFit <- randomForest(classe ~ ., data = train_final)
@@ -121,8 +121,8 @@ E    0    0    0    5 2160 0.002309469
 
 # Apply Random Forest Model to the Testing Dataset
 
-The fitted model was applied to the testing data and the resulting predicitons were used to 
-construct a confusion matrix.
+The fitted model was applied to the 7,846 observations in the testing data and the resulting 
+predicitons were used to construct a confusion matrix.
 ```
 
 pred_rf <- predict(modFit ,test_final,type = "response") 
@@ -137,8 +137,8 @@ pred_rf    A    B    C    D    E
 
 
 ```
-The results of this matrix confirm the OOB error.  The 16 off-diagonal elements yield an 
-out-of-sample error of 0.20%.
+The results of this matrix confirm the OOB error.  The sum of the off-diagonal elements yields an 
+out-of-sample error of 0.20% (0.0020 = 16 / 7846).
 
 
 # Apply Random Forest Model to Validation Dataset
