@@ -23,10 +23,9 @@ str(training)
 
 
 # Clean Data
-The dataset is very large, with 19,622 observations and 160 total columns 
-including the dependent variable classe,name of the subject, and observation number.  
-Many columns were incomplete for all observations.  The first step was to remove all variables 
-with missing values.  This removed 67 columns.
+The dataset is very large, with 19,622 observations and 160 total columns including the dependent 
+variable classe,name of the subject, and observation number.  Many columns were incomplete for all 
+observations.  The first step was to remove all variables with missing values.  This removed 67 columns.
 ```
 ## remove variables with at least one NA from training data
 
