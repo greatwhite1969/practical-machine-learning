@@ -9,13 +9,11 @@ The data were available in two separate comma-separated files.
 [Training Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv)     
 [Testing Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)
 
-This data is part of a larger work previously published:
+This data is part of a larger work previously published by Velloso et al. (2013):
 
-Ugulino, W.; Cardador, D.; Vega, K.; Velloso, E.; Milidiu, R.; Fuks, H. Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements. Proceedings of 21st Brazilian Symposium on Artificial Intelligence. Advances in Artificial Intelligence - SBIA 2012. In: Lecture Notes in Computer Science. , pp. 52-61. Curitiba, PR: Springer Berlin / Heidelberg, 2012. ISBN 978-3-642-34458-9. DOI: 10.1007/978-3-642-34459-6_6. 
+Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013. 
 
-
-
-Note that hereafter the 'testing' dataset above will be called  'validation.' This is to 
+Note that hereafter the 'testing' dataset above will be called 'validation.' This is to 
 distiguish it from the testing data partitioned from the training data, as noted below.  
 
 
