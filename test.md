@@ -52,13 +52,13 @@ factors had over 20 levels which could possible lead to long run times for the m
 ## numeric only with classe
 
 keep <- sapply(train_clean,is.numeric)
-classe <- train_clean$classe
 
 ```
 Classe was added back in, resulting in a dataset with 56 total columns:  55 possible covariates and
 the dependent variable classe.
 ```
 
+classe <- train_clean$classe
 train_clean2 <- cbind(classe,train_clean[,keep])
 dim(train_clean2)
 
@@ -67,7 +67,7 @@ dim(train_clean2)
 
 # Split a Testing Set Off from the Training Set
 One method to impose cross-validation is to set aside part of the training data as a testing set.
-As [Breiman and Cuttler] (http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#features)note, the out-of-bag sampling by random forest models precludes the need for cross-validation.  However, it is done here as an additional
+As [Breiman and Cuttler] (http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#features) note, the out-of-bag sampling by random forest models precludes the need for cross-validation.  However, it is done here as an additional
 check on the model.
 
 The clean data was split 60% to train the random forest model, and 40% for model testing.  This resulted
