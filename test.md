@@ -136,8 +136,8 @@ pred_rf    A    B    C    D    E
 
 
 ```
-The results of this matrix confirm the OOB error.  The sum of the off-diagonal elements yields an 
-out-of-sample error of 0.20% (0.0020 = 16 / 7846).
+The results of this matrix match the OOB error within three decimal places.  The sum of the off-diagonal 
+elements yields an out-of-sample error of 0.20% (0.0020 = 16 / 7846).  
 
 
 # Apply Random Forest Model to Validation Dataset
@@ -154,7 +154,7 @@ dim(valid)
 
 ```
 The numeric-only structure of the training data was applied here for simplicity.  Additionally, 
-the user name and problem ID were included.
+the user name and problem ID were included for identification purposes.
 ```
 
 ## numeric only with name and problem id
