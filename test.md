@@ -1,11 +1,19 @@
 
 # Overview
-The purpose of this project is to...
+The purpose of this project is to predict exercise performance on a five-point scale,
+A through E, based on a large number of measurement indices.  A classification of 'A' indicates
+perfect performance, with B through E indicating deficiencies.  
 
 The data were available in two separate comma-separated files.
 
 [Training Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv)     
 [Testing Data] (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)
+
+This data is part of a larger work previously published:
+
+Ugulino, W.; Cardador, D.; Vega, K.; Velloso, E.; Milidiu, R.; Fuks, H. Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements. Proceedings of 21st Brazilian Symposium on Artificial Intelligence. Advances in Artificial Intelligence - SBIA 2012. In: Lecture Notes in Computer Science. , pp. 52-61. Curitiba, PR: Springer Berlin / Heidelberg, 2012. ISBN 978-3-642-34458-9. DOI: 10.1007/978-3-642-34459-6_6. 
+
+
 
 Note that hereafter the 'testing' dataset above will be called  'validation.' This is to 
 distiguish it from the testing data partitioned from the training data, as noted below.  
